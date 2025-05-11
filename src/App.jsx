@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { Provider, useSelector, useDispatch } from 'react-redux'
 import store from './redux/store'
-import { setUserData } from './redux/userSlice'
+import { setUserData, logoutUser } from './redux/userSlice'
 import { fetchUserInfo } from './services/api'
 import Login from './pages/Login/Login'
 import Dashboard from './pages/Dashboard/Dashboard'
@@ -24,25 +24,23 @@ function App() {
   const { isAuthenticated } = useSelector(state => state.user);
 
   useEffect(() => {
-    // Check if user is already logged in (token exists)
+    // Check if user is already authenticated via cookies
     const checkAuthStatus = async () => {
-      const token = localStorage.getItem('authToken');
-      
-      if (token) {
-        try {
-          // Try to get user info with the stored token
-          const userData = await fetchUserInfo();
-          if (userData) {
-            dispatch(setUserData(userData));
-          }
-        } catch (error) {
-          console.error('Authentication check failed:', error);
-          // Clear invalid token
-          localStorage.removeItem('authToken');
+      try {
+        // Try to get user info - cookies will be sent automatically
+        const userData = await fetchUserInfo();
+        if (userData) {
+          dispatch(setUserData(userData));
+          console.log('User authenticated from session cookie');
         }
+      } catch (error) {
+        console.error('Authentication check failed:', error);
+        // User is not authenticated, nothing else to do
+        // The cookie is managed by the browser
       }
     };
 
+    // Check auth status when the component mounts
     checkAuthStatus();
   }, [dispatch]);
 

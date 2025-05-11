@@ -273,10 +273,18 @@ const Dashboard = () => {
             </form>
             
             {error && <p className={styles.error}>{error}</p>}
-            
-            {queryResults && (
+              {queryResults && (
               <div className={styles.queryResults}>
-                <h4>Query Results</h4>
+                <div className={styles.resultsHeader}>
+                  <h4>Query Results</h4>
+                  <button 
+                    className={styles.copyButton} 
+                    onClick={handleCopyResults}
+                    title="Copy results to clipboard"
+                  >
+                    {isCopied ? 'Copied!' : 'Copy Results'}
+                  </button>
+                </div>
                 <div className={styles.dataContainer}>
                   {queryType === 'html' ? (
                     <div className={styles.htmlContent} dangerouslySetInnerHTML={{ __html: queryResults }} />
@@ -284,12 +292,13 @@ const Dashboard = () => {
                     <pre className={styles.preformatted}>{queryResults}</pre>
                   )}
                 </div>
-                <button 
-                  className={styles.copyButton} 
-                  onClick={handleCopyResults}
-                >
-                  {isCopied ? 'Copied!' : 'Copy to Clipboard'}
-                </button>
+                <div className={styles.resultInfo}>
+                  <small>
+                    {queryType === 'html' ? 
+                      'Results displayed as HTML table. Use Copy Results to copy as text.' : 
+                      'Results displayed as text table.'}
+                  </small>
+                </div>
               </div>
             )}
           </div>

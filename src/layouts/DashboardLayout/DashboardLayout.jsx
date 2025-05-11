@@ -3,24 +3,28 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logoutUser } from '../../redux/userSlice';
 import { clearDashboard } from '../../redux/dashboardSlice';
+import axios from 'axios';
 import styles from './DashboardLayout.module.css';
 
 const DashboardLayout = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    // Clear user data from redux
-    dispatch(logoutUser());
-    
-    // Clear dashboard data from redux
-    dispatch(clearDashboard());
-    
-    // Clear auth token from localStorage
-    localStorage.removeItem('authToken');
-    
-    // Navigate to login page
-    navigate('/login');
+  const navigate = useNavigate();  const handleLogout = async () => {
+    try {
+      // Clear user data from redux
+      dispatch(logoutUser());
+      
+      // Clear dashboard data from redux
+      dispatch(clearDashboard());
+      
+      // Call logout endpoint to clear cookies on the server side
+      const config = (await import('../../utils/config')).default;
+      await axios.post(`${config.baseURL}${config.apiEndpoints.logout}`, {}, { withCredentials: true });
+    } catch (error) {
+      console.error('Error during logout:', error);
+    } finally {
+      // Navigate to login page
+      navigate('/login');
+    }
   };
 
   return (

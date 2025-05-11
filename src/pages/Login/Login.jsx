@@ -18,12 +18,12 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setErrorMsg(null);
-
-    try {
+    setErrorMsg(null);    try {
       const response = await loginUser({ email, password });
-      
       if (response.status === "success") {
+        // Session cookies are now set by the browser
+        console.log('Login successful, session cookie should be set');
+        
         // Successful login, load dashboard data
         const userData = await fetchUserInfo();
         const dashboardData = await initializeDashboardData(userData);
@@ -35,10 +35,11 @@ const Login = () => {
         navigate('/dashboard');
       } else {
         setErrorMsg(response.reason || 'Login failed');
-      }
-    } catch (error) {
+      }    } catch (error) {
+      console.error('Login error:', error);
       const errMsg = error.reason || error.message || 'An error occurred during login.';
       setErrorMsg(errMsg);
+      // No need to clear tokens since we're using cookies managed by the browser
     }
     
     setLoading(false);
