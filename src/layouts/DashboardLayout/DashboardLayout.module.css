@@ -1,0 +1,97 @@
+.layoutContainer {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #2c3e50;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebarHeader {
+  margin-bottom: 30px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 15px;
+}
+
+.sidebarHeader h2 {
+  margin: 0 0 5px 0;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.sidebarHeader p {
+  margin: 0;
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.navigation {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  flex: 1;
+}
+
+.navButton {
+  background: none;
+  border: none;
+  color: white;
+  text-align: left;
+  padding: 12px 15px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: background-color 0.3s;
+}
+
+.navButton:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.logoutButton {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 12px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: auto;
+  transition: all 0.3s;
+}
+
+.logoutButton:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.mainContent {
+  flex: 1;
+  background-color: #f5f7fa;
+  overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+  .layoutContainer {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 100%;
+    padding: 15px;
+  }
+  
+  .sidebarHeader {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+  }
+  
+  .logoutButton {
+    margin-top: 15px;
+  }
+}

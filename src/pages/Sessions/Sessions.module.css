@@ -1,0 +1,233 @@
+.sessionsContainer {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.pageHeader h1 {
+  font-size: 24px;
+  color: #333;
+  margin: 0;
+}
+
+.subheader {
+  color: #666;
+  margin: 5px 0 0 0;
+  font-size: 14px;
+}
+
+.refreshButton {
+  padding: 8px 16px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.refreshButton:hover {
+  background-color: #3a7bc8;
+}
+
+.statsBar {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.statItem {
+  background-color: white;
+  border-radius: 6px;
+  padding: 15px 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+  flex: 1;
+}
+
+.statLabel {
+  display: block;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.statValue {
+  display: block;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.filterSection {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.filterSection h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 16px;
+  color: #333;
+}
+
+.filterControls {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 150px;
+}
+
+.filterGroup label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #555;
+}
+
+.filterInput, .filterSelect {
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.filterInput:focus, .filterSelect:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.filterActions {
+  display: flex;
+  gap: 10px;
+}
+
+.applyButton, .clearButton {
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.applyButton {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+}
+
+.applyButton:hover {
+  background-color: #3a7bc8;
+}
+
+.clearButton {
+  background-color: white;
+  color: #666;
+  border: 1px solid #ddd;
+}
+
+.clearButton:hover {
+  background-color: #f5f5f5;
+}
+
+.error {
+  color: #e74c3c;
+  background-color: #fadbd8;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-size: 18px;
+  color: #666;
+}
+
+.sessionsContent {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  overflow: hidden;
+}
+
+.sessionsTable {
+  overflow-x: auto;
+}
+
+.htmlContent {
+  width: 100%;
+}
+
+.htmlContent table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.htmlContent th,
+.htmlContent td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.htmlContent th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.htmlContent tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.htmlContent tr:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .pageHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .filterControls {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .filterGroup, .filterActions {
+    width: 100%;
+  }
+  
+  .applyButton, .clearButton {
+    flex: 1;
+  }
+}

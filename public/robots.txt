@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://renanbazinin.github.io/focus-flow-admin/sitemap.xml
