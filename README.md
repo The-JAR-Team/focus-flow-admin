@@ -80,7 +80,6 @@ You can also manually deploy using:
 The site will be accessible at: https://The-JAR-Team.github.io/focus-flow-admin/
 
 
-
 ## Project Structure
 
 ```
