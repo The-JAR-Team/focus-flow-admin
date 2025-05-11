@@ -1,5 +1,6 @@
 import axios from 'axios';
 import config from '../utils/config';
+import navigationConfig from '../utils/navigationConfig';
 
 // Set default config for all requests
 axios.defaults.withCredentials = true;
@@ -118,12 +119,11 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => {
     return response;
-  },
-  (error) => {
+  },  (error) => {
     // Handle authentication errors (401 Unauthorized)
     if (error.response && error.response.status === 401) {
       // Redirect to login page on authentication failure
-      window.location.href = '/#/login';
+      window.location.href = navigationConfig.fullPaths.login;
     }
     return Promise.reject(error);
   }

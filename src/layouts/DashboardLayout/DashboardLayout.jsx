@@ -6,6 +6,7 @@ import { clearDashboard } from '../../redux/dashboardSlice';
 import axios from 'axios';
 import styles from './DashboardLayout.module.css';
 import HealthStatus from '../../components/HealthStatus';
+import navigationConfig from '../../utils/navigationConfig';
 
 const DashboardLayout = () => {
   const dispatch = useDispatch();
@@ -21,10 +22,9 @@ const DashboardLayout = () => {
       const config = (await import('../../utils/config')).default;
       await axios.post(`${config.baseURL}${config.apiEndpoints.logout}`, {}, { withCredentials: true });
     } catch (error) {
-      console.error('Error during logout:', error);
-    } finally {
+      console.error('Error during logout:', error);    } finally {
       // Navigate to login page
-      navigate('/login');
+      navigate(navigationConfig.routes.login);
     }
   };
 
