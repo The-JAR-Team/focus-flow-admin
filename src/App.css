@@ -66,3 +66,17 @@ td {
 tr:hover {
   background-color: #f1f3f5;
 }
+
+/* Global table styles to ensure proper alignment */
+table th,
+table td {
+  text-align: left !important;
+}
+
+/* Fix for specific alignment issues in SQL query results */
+th[style*="text-align: right"],
+td[style*="text-align: right"],
+th[align="right"],
+td[align="right"] {
+  text-align: left !important;
+}
