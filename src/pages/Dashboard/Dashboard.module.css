@@ -183,6 +183,43 @@
   cursor: not-allowed;
 }
 
+.examplesSection {
+  background-color: #f5f7fa;
+  border-radius: 6px;
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid #e0e0e0;
+}
+
+.examplesSection h4 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 16px;
+  color: #444;
+}
+
+.exampleButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.exampleButton {
+  padding: 8px 12px;
+  background-color: #fff;
+  color: #4a90e2;
+  border: 1px solid #4a90e2;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+
+.exampleButton:hover {
+  background-color: #f0f7ff;
+  border-color: #3a7bc8;
+}
+
 .queryResults {
   margin-top: 20px;
 }

@@ -9,6 +9,23 @@ import { setUsers, setSessions, setPlaylists } from '../../redux/dashboardSlice'
 import { executeSqlQuery } from '../../services/api';
 import styles from './Dashboard.module.css';
 
+/**
+ * Format SQL query with proper indentation and line breaks
+ * @param {string} query - The SQL query to format
+ * @returns {string} Formatted query
+ */
+const formatSqlQuery = (query) => {
+  // Simple SQL formatting
+  return query
+    .replace(/SELECT/g, 'SELECT\n  ')
+    .replace(/FROM/g, '\nFROM')
+    .replace(/WHERE/g, '\nWHERE')
+    .replace(/GROUP BY/g, '\nGROUP BY')
+    .replace(/ORDER BY/g, '\nORDER BY')
+    .replace(/LIMIT/g, '\nLIMIT')
+    .replace(/JOIN/g, '\nJOIN');
+};
+
 const Dashboard = () => {
   const dispatch = useDispatch();
   const { user } = useSelector(state => state.user);
@@ -20,6 +37,7 @@ const Dashboard = () => {
   const [queryResults, setQueryResults] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [isCopied, setIsCopied] = useState(false);
 
   useEffect(() => {
     loadDashboardData();
@@ -70,6 +88,33 @@ const Dashboard = () => {
       setError('Failed to execute query: ' + (error.message || 'Unknown error'));
       setLoading(false);
     }
+  };
+
+  /**
+   * Copy query results to clipboard
+   */
+  const handleCopyResults = () => {
+    // Create a temporary textarea element to copy the text
+    const textArea = document.createElement('textarea');
+    
+    // If HTML results, we need to extract the text content
+    if (queryType === 'html') {
+      // Create a temporary div to parse the HTML
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = queryResults;
+      textArea.value = tempDiv.textContent || tempDiv.innerText;
+    } else {
+      textArea.value = queryResults;
+    }
+    
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+    
+    // Show copied confirmation
+    setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 2000);
   };
 
   const renderContent = () => {
@@ -131,11 +176,64 @@ const Dashboard = () => {
             </div>
           </div>
         );
-      
-      case 'custom':
+        case 'custom':
         return (
           <div className={styles.tabContent}>
             <h3>Custom SQL Query</h3>
+            
+            <div className={styles.examplesSection}>
+              <h4>Example Queries</h4>
+              <div className={styles.exampleButtons}>                <button 
+                  type="button"
+                  className={styles.exampleButton}
+                  onClick={() => setCustomQuery(formatSqlQuery('SELECT * FROM "User"'))}
+                >
+                  All Users
+                </button>
+                <button 
+                  type="button"
+                  className={styles.exampleButton}
+                  onClick={() => setCustomQuery(formatSqlQuery('SELECT * FROM "Sessions" LIMIT 5'))}
+                >
+                  Recent Sessions
+                </button>
+                <button 
+                  type="button"
+                  className={styles.exampleButton}
+                  onClick={() => setCustomQuery(formatSqlQuery('SELECT * FROM "Playlist" LIMIT 5'))}
+                >
+                  Playlists
+                </button>                <button 
+                  type="button"
+                  className={styles.exampleButton}
+                  onClick={() => setCustomQuery(formatSqlQuery('SELECT user_id, COUNT(*) FROM "Playlist" GROUP BY user_id ORDER BY COUNT(*) DESC'))}
+                >
+                  Playlists per User
+                </button>
+                <button 
+                  type="button"
+                  className={styles.exampleButton}
+                  onClick={() => setCustomQuery(formatSqlQuery('SELECT COUNT(*) as total_users FROM "User"'))}
+                >
+                  Total Users
+                </button>
+                {/*<button 
+                  type="button"
+                  className={styles.exampleButton}
+                  onClick={() => setCustomQuery(formatSqlQuery('SELECT AVG(duration_minutes) as avg_session_length FROM "Sessions"'))}
+                >
+                  Avg Session Length
+                </button>
+                <button 
+                  type="button"
+                  className={styles.exampleButton}
+                  onClick={() => setCustomQuery(formatSqlQuery('SELECT DATE(created_at) as date, COUNT(*) as new_users FROM "User" GROUP BY DATE(created_at) ORDER BY date DESC LIMIT 10'))}
+                >
+                  New Users by Date
+                </button>*/}
+              </div>
+            </div>
+            
             <form onSubmit={handleCustomQuery} className={styles.queryForm}>
               <div className={styles.formRow}>
                 <textarea 
@@ -186,6 +284,12 @@ const Dashboard = () => {
                     <pre className={styles.preformatted}>{queryResults}</pre>
                   )}
                 </div>
+                <button 
+                  className={styles.copyButton} 
+                  onClick={handleCopyResults}
+                >
+                  {isCopied ? 'Copied!' : 'Copy to Clipboard'}
+                </button>
               </div>
             )}
           </div>
