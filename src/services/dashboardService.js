@@ -56,6 +56,28 @@ export const fetchUserStatistics = async () => {
 };
 
 /**
+ * Fetch all users with pagination
+ * @param {number} limit - Maximum number of users to fetch
+ * @param {number} offset - Starting position for fetch
+ * @returns {Promise<string>} HTML table with user data
+ */
+export const fetchAllUsers = async (limit = 100, offset = 0) => {
+  try {
+    const query = `
+      SELECT * FROM "User"
+      ORDER BY user_id
+      LIMIT ${limit} OFFSET ${offset}
+    `;
+    
+    const result = await executeSqlQuery(query, 'html');
+    return result;
+  } catch (error) {
+    console.error('Error fetching all users:', error);
+    throw error;
+  }
+};
+
+/**
  * Fetch session statistics
  * @returns {Promise<Object>} Session statistics
  */

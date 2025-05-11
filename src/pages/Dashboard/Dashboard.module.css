@@ -81,7 +81,7 @@
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   transition: background-color 0.3s;
 }
 
@@ -111,12 +111,13 @@
 .htmlContent td {
   border: 1px solid #ddd;
   padding: 8px;
-  text-align: left;
+  text-align: left !important; /* Added !important to override inline styles */
 }
 
 .htmlContent th {
   background-color: #f2f2f2;
   font-weight: bold;
+  text-align: left !important; /* Force left alignment for headers */
 }
 
 .htmlContent tr:nth-child(even) {
@@ -245,6 +246,54 @@
   height: 200px;
   font-size: 18px;
   color: #666;
+}
+
+.sectionHeader {
+  font-size: 18px;
+  color: #333;
+  margin-top: 25px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sectionContainer {
+  margin-bottom: 30px;
+}
+
+.summaryContainer {
+  max-height: 200px;
+  margin-bottom: 30px;
+}
+
+.userListContainer {
+  margin-top: 30px;
+}
+
+.loadingMessage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.smallLoader {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #4a90e2;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+  margin-top: 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 @media (max-width: 768px) {

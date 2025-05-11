@@ -3,7 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { 
   fetchUserStatistics, 
   fetchSessionStatistics, 
-  fetchPlaylistStatistics 
+  fetchPlaylistStatistics,
+  fetchAllUsers as fetchAllUsersService
 } from '../../services/dashboardService';
 import { setUsers, setSessions, setPlaylists } from '../../redux/dashboardSlice';
 import { executeSqlQuery } from '../../services/api';
@@ -30,18 +31,36 @@ const Dashboard = () => {
   const dispatch = useDispatch();
   const { user } = useSelector(state => state.user);
   const { users, sessions, playlists } = useSelector(state => state.dashboard);
-  
-  const [activeTab, setActiveTab] = useState('users');
+    const [activeTab, setActiveTab] = useState('users');
   const [customQuery, setCustomQuery] = useState('');
   const [queryType, setQueryType] = useState('html');
   const [queryResults, setQueryResults] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isCopied, setIsCopied] = useState(false);
-
+  const [allUsersData, setAllUsersData] = useState(null);
+  const [usersLoading, setUsersLoading] = useState(false);
   useEffect(() => {
     loadDashboardData();
-  }, []);
+    
+    // If the active tab is users, fetch all users data
+    if (activeTab === 'users') {
+      fetchAllUsers();
+    }
+  }, [activeTab]);
+  const fetchAllUsers = async () => {
+    try {
+      setAllUsersData(null); // Reset to show loading state
+      setLoading(true);
+      const result = await fetchAllUsersService();
+      setAllUsersData(result);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching all users:', error);
+      setError('Failed to load all users data');
+      setLoading(false);
+    }
+  };
 
   const loadDashboardData = async () => {
     try {
@@ -116,25 +135,49 @@ const Dashboard = () => {
     setIsCopied(true);
     setTimeout(() => setIsCopied(false), 2000);
   };
-
   const renderContent = () => {
-    switch (activeTab) {
-      case 'users':
+    switch (activeTab) {      case 'users':
         return (
           <div className={styles.tabContent}>
             <h3>User Data</h3>
             <button 
               className={styles.refreshButton}
-              onClick={() => fetchUserStatistics().then(data => dispatch(setUsers(data)))}
+              onClick={() => {
+                fetchUserStatistics().then(data => dispatch(setUsers(data)));
+                // Also fetch all users data when refresh is clicked
+                fetchAllUsers();
+              }}
             >
               Refresh Data
             </button>
-            <div className={styles.dataContainer}>
-              {users ? (
-                <div className={styles.htmlContent} dangerouslySetInnerHTML={{ __html: users }} />
-              ) : (
-                <p>No user data available</p>
-              )}
+            
+            <div className={styles.sectionContainer}>
+              <div className={styles.sectionHeader}>
+                <h4>User Summary</h4>
+              </div>
+              <div className={`${styles.dataContainer} ${styles.summaryContainer}`}>
+                {users ? (
+                  <div className={styles.htmlContent} dangerouslySetInnerHTML={{ __html: users }} />
+                ) : (
+                  <p>No user summary available</p>
+                )}
+              </div>
+            </div>
+            
+            <div className={styles.sectionContainer}>
+              <div className={styles.sectionHeader}>
+                <h4>All Users</h4>
+              </div>
+              <div className={styles.dataContainer}>
+                {allUsersData ? (
+                  <div className={styles.htmlContent} dangerouslySetInnerHTML={{ __html: allUsersData }} />
+                ) : (
+                  <div className={styles.loadingMessage}>
+                    <p>Loading all user data...</p>
+                    {loading && <div className={styles.smallLoader}></div>}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         );
