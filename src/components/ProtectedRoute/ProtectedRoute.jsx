@@ -22,9 +22,11 @@ const ProtectedRoute = () => {
           const userData = await fetchUserInfo();
           if (userData) {
             dispatch(setUserData(userData));
-          }        } catch (error) {          console.error('Failed to restore session:', error);
+          }        } catch (error) {
+          console.error('Failed to restore session:', error);
           // Session cookie is invalid or missing, redirect to login
-          navigate(navigationConfig.routes.login, { replace: true });
+          // Use window.location for a full page refresh
+          window.location.href = navigationConfig.fullPaths.login;
         }
       };
       checkSession();
@@ -32,6 +34,7 @@ const ProtectedRoute = () => {
   }, [isAuthenticated, dispatch, navigate]);  // If not authenticated, redirect to login page
   // The component will try to fetch user info first in the useEffect
   if (!isAuthenticated) {
+    // Using Navigate component which works within React Router context
     return <Navigate to={navigationConfig.routes.login} replace />;
   }
 

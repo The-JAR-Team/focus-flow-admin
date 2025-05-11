@@ -18,7 +18,9 @@ const navigationConfig = {
   // Used for window.location.href
   fullPaths: {
     login: '/focus-flow-admin/#/login',
-    dashboard: '/focus-flow-admin/#/dashboard'
+    dashboard: '/focus-flow-admin/#/dashboard',
+    users: '/focus-flow-admin/#/users',
+    sessions: '/focus-flow-admin/#/sessions'
   }
 };
 

@@ -5,6 +5,7 @@ import { loginUser, fetchUserInfo } from '../../services/api';
 import { initializeDashboardData } from '../../services/dashboardService';
 import { setUserData } from '../../redux/userSlice';
 import { setDashboardData } from '../../redux/dashboardSlice';
+import navigationConfig from '../../utils/navigationConfig';
 import styles from './Login.module.css';
 
 const Login = () => {
@@ -28,11 +29,11 @@ const Login = () => {
         const userData = await fetchUserInfo();
         const dashboardData = await initializeDashboardData(userData);
 
-        // Update Redux store
-        dispatch(setUserData(userData));
+        // Update Redux store        dispatch(setUserData(userData));
         dispatch(setDashboardData(dashboardData));
 
-        navigate('/dashboard');
+        // Use navigate for normal flow within the app
+        navigate(navigationConfig.routes.dashboard);
       } else {
         setErrorMsg(response.reason || 'Login failed');
       }    } catch (error) {

@@ -37,8 +37,7 @@ const HealthStatus = () => {
     } catch (e) {
       return dateString;
     }
-  };
-  if (loading) {
+  };  if (loading) {
     return <div className={styles.healthContainer}>
       <div className={`${styles.statusIndicator} ${styles.loading}`}></div>
       <span className={styles.statusText}>Checking...</span>

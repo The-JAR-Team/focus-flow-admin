@@ -10,6 +10,7 @@ import Users from './pages/Users/Users'
 import Sessions from './pages/Sessions/Sessions'
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 import DashboardLayout from './layouts/DashboardLayout/DashboardLayout'
+import navigationConfig from './utils/navigationConfig'
 import './App.css'
 
 // App wrapper with Redux Provider
@@ -48,20 +49,28 @@ function App() {
     <Router>
       <Routes>
         {/* Public routes */}
-        <Route path="/login" element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <Login />} />
+        <Route 
+          path={navigationConfig.routes.login} 
+          element={isAuthenticated ? 
+            <Navigate to={navigationConfig.routes.dashboard} replace /> : 
+            <Login />
+          } 
+        />
         
         {/* Protected routes */}
         <Route element={<ProtectedRoute />}>
           <Route element={<DashboardLayout />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/users" element={<Users />} />
-            <Route path="/sessions" element={<Sessions />} />
+            <Route path={navigationConfig.routes.dashboard} element={<Dashboard />} />
+            <Route path={navigationConfig.routes.users} element={<Users />} />
+            <Route path={navigationConfig.routes.sessions} element={<Sessions />} />
             {/* Add more protected routes here */}
           </Route>
         </Route>
         
         {/* Redirect root to dashboard or login */}
-        <Route path="/" element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} replace />} />
+        <Route path="/" element={
+          <Navigate to={isAuthenticated ? navigationConfig.routes.dashboard : navigationConfig.routes.login} replace />
+        } />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
