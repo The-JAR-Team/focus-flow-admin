@@ -5,6 +5,7 @@ import { logoutUser } from '../../redux/userSlice';
 import { clearDashboard } from '../../redux/dashboardSlice';
 import axios from 'axios';
 import styles from './DashboardLayout.module.css';
+import HealthStatus from '../../components/HealthStatus';
 
 const DashboardLayout = () => {
   const dispatch = useDispatch();
@@ -28,11 +29,12 @@ const DashboardLayout = () => {
   };
 
   return (
-    <div className={styles.layoutContainer}>
-      <aside className={styles.sidebar}>
-        <div className={styles.sidebarHeader}>
+    <div className={styles.layoutContainer}>      <aside className={styles.sidebar}>      <div className={styles.sidebarHeader}>
           <h2>Focus Flow</h2>
           <p>Admin Dashboard</p>
+        </div>
+        <div className={styles.healthStatusContainer}>
+          <HealthStatus />
         </div>
         
         <nav className={styles.navigation}>

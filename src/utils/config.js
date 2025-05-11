@@ -7,6 +7,7 @@ const config = {
     login: '/login',
     logout: '/logout',
     userInfo: '/user_info', // Updated to match actual endpoint
+    health: '/health',
     debug: {
       sql: '/debug/sql',
     }

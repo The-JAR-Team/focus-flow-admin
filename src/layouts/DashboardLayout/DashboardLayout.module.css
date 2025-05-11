@@ -18,6 +18,10 @@
   padding-bottom: 15px;
 }
 
+.healthStatusContainer {
+  margin-bottom: 20px;
+}
+
 .sidebarHeader h2 {
   margin: 0 0 5px 0;
   font-size: 22px;

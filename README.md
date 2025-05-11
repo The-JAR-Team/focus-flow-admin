@@ -15,6 +15,17 @@ Admin dashboard is set up with login, user management, session monitoring, and S
 - Session monitoring
 - Playlist management
 - Custom query builder
+- Real-time API health monitoring with status indicator
+
+### Screenshots
+
+#### User Management Dashboard
+![User Management Dashboard](https://i.imgur.com/FjWQItE.png)
+*The admin dashboard displaying a summary of all users with well-aligned data tables. Note the health status indicator in the sidebar showing API status, version, and build details.*
+
+#### Custom SQL Query for Playlists
+![Custom SQL Query for Playlists](https://i.imgur.com/SgN53En.png)
+*Example of a custom SQL query showing playlist data. The sidebar includes real-time health monitoring that displays the API status, version number, and last build timestamp.*
 
 ## Technology Stack
 
@@ -79,6 +90,18 @@ You can also manually deploy using:
 
 The site will be accessible at: https://The-JAR-Team.github.io/focus-flow-admin/
 
+### Environment Configuration
+
+The application connects to the backend API configured in `src/utils/config.js`. The configuration includes:
+
+- `baseURL`: The base URL of the API server
+- `apiEndpoints`: Object containing all API endpoint paths
+  - `login`: Authentication endpoint
+  - `logout`: Session termination endpoint
+  - `userInfo`: Current user information endpoint
+  - `health`: System health status endpoint
+  - `debug.sql`: SQL query execution endpoint
+
 
 ## Project Structure
 
@@ -98,4 +121,21 @@ focus-flow-admin/
 
 ## API Integration
 
-Secretttt
+The dashboard integrates with the Focus Flow backend API using Axios for all HTTP requests. The integration includes:
+
+- Authentication with secure cookie-based sessions
+- User data management
+- Session monitoring
+- SQL query execution for debugging
+- Health status monitoring
+
+### Health Status Monitoring
+
+The dashboard includes a health status indicator in the sidebar that provides real-time information about the backend API:
+
+- **Status Indicator**: Shows if the API is healthy (green) or experiencing issues (red)
+- **Version Information**: Displays the current API version
+- **Build Details**: Shows the timestamp of the last successful build
+- **Auto-refresh**: The status refreshes automatically every 60 seconds
+
+This feature helps administrators quickly identify any backend issues without having to navigate away from their current task.

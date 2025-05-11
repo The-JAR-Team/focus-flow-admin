@@ -85,6 +85,20 @@ export const executeSqlQuery = async (query, type = 'html') => {
   }
 };
 
+/**
+ * Fetch backend health status
+ * @returns {Promise<Object>} Health status object
+ */
+export const fetchHealthStatus = async () => {
+  try {
+    const response = await api.get(config.apiEndpoints.health);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching health status:', error);
+    throw error;
+  }
+};
+
 // No need for authorization token management as we're using cookies
 // The browser will automatically include the cookie with each request
 
